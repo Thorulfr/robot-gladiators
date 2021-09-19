@@ -52,7 +52,7 @@ var fight = function(enemyName) {
             } else {
                 window.alert(playerName + " still has " + playerHealth + " health left.");
             }
-            
+        // If player enters anything other than fight or skip, prompt to enter valid response
         } else {
             window.alert("You need to choose a valid option. Try Again!");
         }
@@ -62,7 +62,14 @@ var fight = function(enemyName) {
 // Fight through each enemy in the enemyNames array
 for (var i = 0; i < enemyNames.length; i++) {
     // debugger;
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(pickedEnemyName);
+    if (playerHealth > 0) {
+        // Welcome player to game/round
+        window.alert("Welcome to Robot Gladiators - Round " + (i + 1) + "!");
+        var pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickedEnemyName);
+    // If player's robot has died, announce game over
+    } else {
+        window.alert("You have lost your robot in battle - game over!");
+    }
 }
