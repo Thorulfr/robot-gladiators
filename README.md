@@ -1,2 +1,3 @@
 # robot-gladiators
-Game developed for ficitonal hackathon "Con Solo Game Jam"
+
+Game developed for fictional hackathon "Con Solo Game Jam"
