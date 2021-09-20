@@ -68,7 +68,7 @@ var startGame = function() {
     playerMoney = 10;
     // Fight through each enemy in the enemyNames array
     for (var i = 0; i < enemyNames.length; i++) {
-        debugger;
+        // debugger;
         if (playerHealth > 0) {
             // Welcome player to game/round
             window.alert("Welcome to Robot Gladiators - Round " + (i + 1) + "!");
