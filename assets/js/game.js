@@ -28,7 +28,7 @@ var playerInfo = {
     reset: function() {
         this.health = 100;
         this.attack = 50;
-        this.money = 10;
+        this.money = 100;
     },
     upgradeAttack: function() {
         if (this.money >= 7) {
@@ -131,7 +131,7 @@ var startGame = function() {
         if (playerInfo.health > 0) {
             // Welcome player to game/round
             window.alert("Welcome to Robot Gladiators - Round " + (i + 1) + "!");
-            debugger;
+            // debugger;
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40, 60);
             fight(pickedEnemyObj);
@@ -170,22 +170,22 @@ var endGame = function() {
 
 var shop = function() {
     // Ask what the player would like to purchase
+    // debugger;
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health for $7, UPGRADE your attack for $7, or LEAVE the shop? Please enter 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health for $7, UPGRADE your attack for $7, or LEAVE the shop? Please enter '1' to REFILL, '2' to UPGRADE, or '3' to LEAVE."
         );
+    // Convert the player's response to an integer
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt) {
-        case "REFILL":
-        case "refill":
+        case 1:
             // Increase health, decrease money
             playerInfo.refillHealth();
             break;
-        case "UPGRADE":
-        case "upgrade":
+        case 2:
             // Increase attack, decrease money
             playerInfo.upgradeAttack();
             break;
-        case "LEAVE":
-        case "leave":
+        case 3:
             window.alert("Leaving the store!");
             // Do nothing, ending the function
             break;
