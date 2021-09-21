@@ -66,6 +66,35 @@ var enemyInfo = [
 
 // END Global Variables
 
+// Function to start a new game
+var startGame = function() {
+    // Reset player stats at beginning of each new game
+    playerInfo.reset();
+    // Fight through each enemy in the enemyInfo array
+    for (var i = 0; i < enemyInfo.length; i++) {
+        if (playerInfo.health > 0) {
+            // Welcome player to game/round
+            window.alert("Welcome to Robot Gladiators - Round " + (i + 1) + "!");
+            debugger;
+            var pickedEnemyObj = enemyInfo[i];
+            pickedEnemyObj.health = randomNumber(40, 60);
+            fight(pickedEnemyObj);
+            // Give player the option to shop if there are still enemies and player is not dead
+            if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
+                var storeConfirm = window.confirm("The fight is over. Would you like to shop before the next round?");
+                if (storeConfirm) {
+                    shop();
+                }
+            }
+        // If player's robot has died, announce game over
+        } else {
+            window.alert("You have lost your robot in battle - game over!");
+            break;
+        }
+    }
+    endGame();
+}
+
 // Function to allow player to fight or skip a round
 var fightOrSkip = function () { 
     // Ask player if they want to fight or skip
@@ -149,52 +178,7 @@ var fight = function(enemy) {
     }
 }
 
-// Function to start a new game
-var startGame = function() {
-    // Reset player stats at beginning of each new game
-    playerInfo.reset();
-    // Fight through each enemy in the enemyInfo array
-    for (var i = 0; i < enemyInfo.length; i++) {
-        if (playerInfo.health > 0) {
-            // Welcome player to game/round
-            window.alert("Welcome to Robot Gladiators - Round " + (i + 1) + "!");
-            debugger;
-            var pickedEnemyObj = enemyInfo[i];
-            pickedEnemyObj.health = randomNumber(40, 60);
-            fight(pickedEnemyObj);
-            // Give player the option to shop if there are still enemies and player is not dead
-            if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
-                var storeConfirm = window.confirm("The fight is over. Would you like to shop before the next round?");
-                if (storeConfirm) {
-                    shop();
-                }
-            }
-        // If player's robot has died, announce game over
-        } else {
-            window.alert("You have lost your robot in battle - game over!");
-            break;
-        }
-    }
-    endGame();
-}
-
-// Function to end game
-var endGame = function() {
-    // If the player's still alive, they win; if not, they lose
-    if (playerInfo.health > 0) {
-        window.alert("Great job – you survived! Your score is: " + playerInfo.money);
-    } else {
-        window.alert("You've lost your robot in battle.");
-    }
-    // Ask if the player would like to play again
-    var playAgainConfirm = window.confirm("Would you like to play again?");
-    if (playAgainConfirm) {
-        startGame();
-    } else {
-        window.alert("Thank you for playing Robot Gladiators! Come back soon.");
-    }
-}
-
+// Shop function
 var shop = function() {
     // Ask what the player would like to purchase
     var shopOptionPrompt = window.prompt(
@@ -220,6 +204,32 @@ var shop = function() {
             // Call shop function again
             shop();
             break;
+    }
+}
+
+// Function to end game
+var endGame = function() {
+    window.alert("The game is over. Let's see how you did!");
+    // Check localStorage for a high score
+    var highScore = localStorage.getItem("highscore");
+    // If there is no local high score, set it to 0
+    highScore = highScore || 0;
+    // If the player has more money than the high score, set high score to match player's score
+    if (playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+        // Inform player they have the new high score
+        window.alert("Congratulations! " + playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+    } else {
+        // Inform player they do not have the high score
+        window.alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!");
+    }
+    // Ask if the player would like to play again
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+    if (playAgainConfirm) {
+        startGame();
+    } else {
+        window.alert("Thank you for playing Robot Gladiators! Come back soon.");
     }
 }
 
