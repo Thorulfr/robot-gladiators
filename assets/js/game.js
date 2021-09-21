@@ -1,9 +1,19 @@
 // BEGIN Utility Functions
 
 // Function to random numeric value
-function randomNumber(min, max) {
+var randomNumber = function(min, max) {
     var value = Math.floor(Math.random() * (max - min + 1)) + min;
     return value;
+}
+
+// Function to set player name
+var getPlayerName = function() {
+    var name = "";
+    while (name === "" || name === null) {
+        name = window.prompt("What is your robot's name?");
+    }
+    console.log("Your robot's name is " + name);
+    return name;
 }
 
 // END Utility Functions
@@ -11,7 +21,7 @@ function randomNumber(min, max) {
 // BEGIN Global Variables
 
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -118,10 +128,10 @@ var startGame = function() {
     playerInfo.reset();
     // Fight through each enemy in the enemyInfo array
     for (var i = 0; i < enemyInfo.length; i++) {
-        debugger;
         if (playerInfo.health > 0) {
             // Welcome player to game/round
             window.alert("Welcome to Robot Gladiators - Round " + (i + 1) + "!");
+            debugger;
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40, 60);
             fight(pickedEnemyObj);
